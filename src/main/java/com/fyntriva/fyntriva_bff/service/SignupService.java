@@ -4,7 +4,7 @@ import com.fyntriva.fyntriva_bff.dto.SignupRequest;
 import com.fyntriva.fyntriva_bff.entity.User;
 import com.fyntriva.fyntriva_bff.repository.UserRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,10 +18,11 @@ public class SignupService {
     private static final int MAX_PASSWORD_BYTES = 72;
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
 
-    public SignupService(UserRepository userRepository) {
+    public SignupService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User signup(SignupRequest request) {
